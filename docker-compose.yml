@@ -1,0 +1,20 @@
+version: "2"
+services:
+  kafka:
+    image: docker.io/bitnami/kafka:3.4
+    ports:
+      - "19092:19092"
+    volumes:
+      - "/Users/gideon.okhakumhe/Documents/Learning/PersonalProject/kafka/volume:/bitnami/kafka"
+    environment:
+      - BITNAMI_DEBUG=true
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:19092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,EXTERNAL://localhost:19092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      
+
+  
+  
+
+  

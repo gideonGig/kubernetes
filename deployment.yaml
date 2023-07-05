@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-label
+  template:
+    metadata:
+      labels:
+        app: kafka-label
+    spec:
+      containers:
+      - name: kafka
+        image: gideongig/kafka-local:2
+        env:
+          - name: BITNAMI_DEBUG
+            valueFrom:
+              configMapKeyRef:
+                name: kafka-config-map
+                key: BITNAMI_DEBUG
+          - name: ALLOW_PLAINTEXT_LISTENER
+            valueFrom:
+              configMapKeyRef:
+                name: kafka-config-map
+                key: ALLOW_PLAINTEXT_LISTENER
+          - name: KAFKA_CFG_LISTENERS
+            valueFrom:
+              configMapKeyRef:
+                name: kafka-config-map
+                key: KAFKA_CFG_LISTENERS
+          - name: KAFKA_CFG_ADVERTISED_LISTENERS
+            valueFrom:
+              configMapKeyRef:
+                name: kafka-config-map
+                key: KAFKA_CFG_ADVERTISED_LISTENERS
+          - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
+            valueFrom:
+              configMapKeyRef:
+                name: kafka-config-map
+                key: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
+        volumeMounts:
+          - name: kafka-volume
+            mountPath: "/Users/gideon.okhakumhe/Documents/Learning/PersonalProject/kafka/volume"
+      volumes:
+        - name: kafka-volume
+          persistentVolumeClaim:
+            claimName: kafka-persistent-volume-claim
+        # - name: mydir
+        #     hostPath:
+        #       path: /var/local/aaa
+        #       type: DirectoryOrCreate
+        # - name: myfile
+        #     hostPath:
+        #       path: /var/local/aaa/1.txt
+        #       type: FileOrCreate
+  
+

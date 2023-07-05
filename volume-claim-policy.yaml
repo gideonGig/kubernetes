@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kafka-persistent-volume-claim
+spec:
+  volumeName: kafka-volume
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
